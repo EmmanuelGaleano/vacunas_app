@@ -1,0 +1,26 @@
+# =============================================================================
+# docker-compose.yml - Vacunas App (versión web)
+#
+# Levanta la app Flutter compilada para web en http://localhost:8080
+#
+# Requisito: la API MyVaccine del profesor debe estar corriendo antes
+# (sus propios contenedores publican la API en el puerto 38791).
+#
+# Comandos:
+#   flutter build web --release --dart-define=API_URL=mismo-origen
+#                                  -> compila la app (hacerlo primero)
+#   docker compose up -d --build   -> construye la imagen y levanta el contenedor
+#   docker compose logs -f         -> ver los registros
+#   docker compose down            -> detener y eliminar el contenedor
+# =============================================================================
+services:
+  vacunas-web:
+    build: .
+    container_name: vacunas-web
+    ports:
+      - "8080:80"   # puerto del computador : puerto de nginx en el contenedor
+    extra_hosts:
+      # En Windows/Mac (Docker Desktop) host.docker.internal ya existe.
+      # Esta línea hace que también funcione en Linux.
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

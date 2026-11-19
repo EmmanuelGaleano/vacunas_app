@@ -1,0 +1,6 @@
+# Docker solo necesita dos cosas para construir la imagen:
+# la configuración de nginx y la app ya compilada para web.
+# Todo lo demás se ignora (la construcción es más rápida).
+*
+!nginx.conf
+!build/web
